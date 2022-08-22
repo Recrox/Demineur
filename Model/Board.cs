@@ -20,13 +20,27 @@ namespace Demineur.Model
 
         private void FillBoard()
         {
+            
             for (int i = 0; i < X_SIZE; i++)
             {
                 for (int y = 0; y < Y_SIZE; y++)
                 {
-                    this.TabCell[i, y] = new Cell(false);
+                    bool hasBomb = findRandomLuckForBomb();
+                    this.TabCell[i, y] = new Cell(hasBomb);
                 }
             }
+        }
+
+        private static bool findRandomLuckForBomb()
+        {
+            Random rand = new Random();
+            bool hasBomb;
+            if (rand.Next(1, 4) == 1)
+            {
+                hasBomb = true;
+            }
+            else hasBomb = false;
+            return hasBomb;
         }
     }
 }
