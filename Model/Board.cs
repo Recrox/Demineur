@@ -10,7 +10,8 @@ namespace Demineur.Model
     {
         public const int X_SIZE = 10;
         public const int Y_SIZE = 10;
-        Cell [,] board = new Cell[X_SIZE, Y_SIZE];
+        private Cell[,] tabCell = new Cell[X_SIZE, Y_SIZE];
+        internal Cell[,] TabCell { get => tabCell; set => tabCell = value; }
 
         public Board()
         {
@@ -23,7 +24,7 @@ namespace Demineur.Model
             {
                 for (int y = 0; y < Y_SIZE; y++)
                 {
-                    this.board[i,y] = new Cell();
+                    this.TabCell[i, y] = new Cell(false);
                 }
             }
         }
