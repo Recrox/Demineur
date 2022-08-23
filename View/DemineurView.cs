@@ -22,7 +22,7 @@ namespace Demineur
                 for (int j = 0; j < Board.Y_SIZE; j++)
                 {
                     Button cell = new Button();
-                    cell.Location = new System.Drawing.Point(CELL_SIZE * j, CELL_SIZE * i);
+                    cell.Location = new System.Drawing.Point(CELL_SIZE * i, CELL_SIZE * j);
                     cell.Size = new System.Drawing.Size(CELL_SIZE, CELL_SIZE);
                     cell.Click += button_Click;
                     
@@ -31,15 +31,18 @@ namespace Demineur
             }
         }
 
-        private static void button_Click(object sender, EventArgs eventArgs)
+        private void button_Click(object sender, EventArgs eventArgs)
         {
             Button button = (Button)sender;
             button.Enabled = false;
 
-            int index_x = button.Location.X / Board.X_SIZE;
-            int index_y = button.Location.X / Board.Y_SIZE;
-            if (board.TabCell[index_x,index_y].HasBomb == true ) button.Text = "X";
+            int index_x = button.Location.X / CELL_SIZE;
+            int index_y = button.Location.Y / CELL_SIZE;
+            
+            if (board.TabCell[index_x,index_y].HasBomb == true ) button.Text = "X"; 
             else button.Text = "-";
+            
+
         }
     }
 }
