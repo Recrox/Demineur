@@ -17,6 +17,7 @@ namespace Demineur.Controller
             Board board = new Board();
             ApplicationConfiguration.Initialize();
             Application.Run(new DemineurView(board));
+
         }
     }
 }

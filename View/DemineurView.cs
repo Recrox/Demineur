@@ -7,8 +7,6 @@ namespace Demineur
     {
         private Board board;
         private const int CELL_SIZE = 25;
-        public int x_size;
-        public int y_size;
 
         internal DemineurView(Board board)
         {
@@ -19,24 +17,16 @@ namespace Demineur
 
         private void InitializeBoard()
         {
-
-            x_size = board.TabCell.GetLength(0);
-            y_size = board.TabCell.GetLength(1);
-            Button[,] cells = new Button[x_size, y_size];
-
-            for (int i = 0; i < x_size; i++)
+            for (int i = 0; i < Board.X_SIZE; i++)
             {
-                for (int j = 0; j < y_size; j++)
+                for (int j = 0; j < Board.Y_SIZE; j++)
                 {
                     Button cell = new Button();
                     cell.Location = new System.Drawing.Point(CELL_SIZE * j, CELL_SIZE * i);
                     cell.Size = new System.Drawing.Size(CELL_SIZE, CELL_SIZE);
-                    cells[i, j] = cell;
                     cell.Click += button_Click;
-                    //cell. = board[j, i];
-
-                    this.Controls.Add(cell);
                     
+                    this.Controls.Add(cell);
                 }
             }
         }
@@ -45,12 +35,11 @@ namespace Demineur
         {
             Button button = (Button)sender;
             button.Enabled = false;
-            if (true)
-            {
-                button.Text = "B";
-            }
+
+            int index_x = button.Location.X / Board.X_SIZE;
+            int index_y = button.Location.X / Board.Y_SIZE;
+            if (board.TabCell[index_x,index_y].HasBomb == true ) button.Text = "X";
+            else button.Text = "-";
         }
-
-
     }
 }

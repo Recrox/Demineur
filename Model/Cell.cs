@@ -8,14 +8,15 @@ namespace Demineur.Model
 {
     internal class Cell
     {
-        bool hasBomb;
-        bool isDiscover;
+        private bool hasBomb;
+        private bool isDiscover;
 
         public Cell(bool hasBomb)
         {
-            this.hasBomb = hasBomb;
+            this.HasBomb = hasBomb;
         }
 
-
+        public bool HasBomb { get => hasBomb; set => hasBomb = value; }
+        public bool IsDiscover { get => isDiscover; set => isDiscover = value; }
     }
 }

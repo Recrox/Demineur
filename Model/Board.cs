@@ -8,10 +8,12 @@ namespace Demineur.Model
 {
     internal class Board
     {
-        public const int X_SIZE = 10;
-        public const int Y_SIZE = 10;
+        private static int x_SIZE = 10;
+        private static int y_SIZE = 10;
         private Cell[,] tabCell = new Cell[X_SIZE, Y_SIZE];
         internal Cell[,] TabCell { get => tabCell; set => tabCell = value; }
+        public static int X_SIZE { get => x_SIZE; set => x_SIZE = value; }
+        public static int Y_SIZE { get => y_SIZE; set => y_SIZE = value; }
 
         public Board()
         {
