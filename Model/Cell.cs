@@ -9,7 +9,8 @@ namespace Demineur.Model
     internal class Cell
     {
         private bool hasBomb;
-        private bool isDiscover;
+        private bool isDiscover = false;
+        private int bombAround;
 
         public Cell(bool hasBomb)
         {
@@ -18,5 +19,6 @@ namespace Demineur.Model
 
         public bool HasBomb { get => hasBomb; set => hasBomb = value; }
         public bool IsDiscover { get => isDiscover; set => isDiscover = value; }
+        public int BombAround { get => bombAround; set => bombAround = value; }
     }
 }
