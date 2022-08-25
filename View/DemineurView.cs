@@ -7,7 +7,7 @@ namespace Demineur
     {
         private Board board;
         private const int CELL_SIZE = 25;
-        private Button[,] buttons;
+        private Button[,] buttons = new Button[Board.X_SIZE, Board.Y_SIZE];
 
         internal DemineurView(Board board)
         {
@@ -15,7 +15,7 @@ namespace Demineur
             InitializeComponent();
             InitializeBoard();
             //this.ActiveControl = null;
-        }
+    }
 
         private void InitializeBoard()
         {
@@ -28,12 +28,11 @@ namespace Demineur
                     cell.Size = new System.Drawing.Size(CELL_SIZE, CELL_SIZE);
                     cell.Click += button_Click;
 
-                    //this.buttons[i, j] = cell;
+                    buttons[i,j] = cell;
                     this.Controls.Add(cell);
                 }
             }
             this.AutoSize = true;
-            //this.Size = new System.Drawing.Size(CELL_SIZE* Board.X_SIZE, CELL_SIZE* Board.Y_SIZE);
         }
 
         private void button_Click(object sender, EventArgs eventArgs)
@@ -47,37 +46,49 @@ namespace Demineur
 
             board.DiscoverCell(index_x, index_y);
 
-            if (board.TabCell[index_x, index_y].HasBomb == true) {
+            if (HadBomb(index_x, index_y))
+            {
                 button.Text = "X";
                 MessageBox.Show("U Lose noob");
             }
-            else if (board.TabCell[index_x, index_y].BombAround == 0)
+            else if (board.Had0BombAround(index_x, index_y))
             {
-                for (int i = index_x - 1; i < index_x - 1 + Board.LINE_ANALYSYS; i++)
+                DiscoverEmptyCellAround(index_x, index_y);
+            }
+            else
+            {
+                button.Text = board.TabCell[index_x, index_y].BombAround.ToString();
+            }
+
+                
+        }
+
+        
+
+        private bool HadBomb(int index_x, int index_y)
+        {
+            return board.TabCell[index_x, index_y].HasBomb == true;
+        }
+
+        private void DiscoverEmptyCellAround(int index_x, int index_y)
+        {
+            for (int i = index_x - 1; i < index_x - 1 + Board.LINE_ANALYSYS; i++)
+            {
+                for (int j = index_y - 1; j < index_y - 1 + Board.COLUMN_ANALYSYS; j++)
                 {
-                    for (int j = index_y - 1; j < index_y - 1 + Board.COLUMN_ANALYSYS; j++)
+                    try
                     {
-                        try
-                        {
-                            //this.board.DiscoverCell(i, j);
-                            //this.buttons[i, j].Enabled = false;
 
-
-                            if (this.board.TabCell[i, j].HasBomb == true)// 'i' mean  index_x     AND     'j' mean  index_y 
-                            {
-
-                            }
-                        }
-                        catch (IndexOutOfRangeException)
-                        {
-                            new IndexOutOfRangeException();
-                        }
-
+                        this.board.DiscoverCell(i, j);
+                        this.buttons[i,j].Enabled = false;
+                        this.board.TabCell[i, j].BombAround.ToString();
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        new IndexOutOfRangeException();
                     }
                 }
             }
-            else
-                button.Text = board.TabCell[index_x, index_y].BombAround.ToString();
         }
     }
 }

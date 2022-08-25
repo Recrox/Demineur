@@ -10,9 +10,9 @@ namespace Demineur.Model
     {
         private static int line_ANALYSYS = 3;
         private static int column_ANALYSYS = 3;
-        private const int LuckToFindBomb = 6;
-        private static int x_SIZE = 20;
-        private static int y_SIZE = 20;
+        private const int LuckToFindBomb = 8;
+        private static int x_SIZE = 10;
+        private static int y_SIZE = 10;
         private Cell[,] tabCell = new Cell[X_SIZE, Y_SIZE];
         public Cell[,] TabCell { get => tabCell; set => tabCell = value; }
         public static int X_SIZE { get => x_SIZE; set => x_SIZE = value; }
@@ -81,6 +81,11 @@ namespace Demineur.Model
                 }
             }
             return BombAround;
+        }
+
+        public bool Had0BombAround(int index_x, int index_y)
+        {
+            return TabCell[index_x, index_y].BombAround == 0;
         }
     }
 }
