@@ -1,4 +1,5 @@
 using Demineur.Model;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Demineur
@@ -49,18 +50,18 @@ namespace Demineur
             if (HadBomb(index_x, index_y))
             {
                 button.Text = "X";
-                MessageBox.Show("U Lose noob");
+                //MessageBox.Show("U Lose noob");
             }
+            
             else if (board.Had0BombAround(index_x, index_y))
             {
                 DiscoverEmptyCellAround(index_x, index_y);
             }
+            
             else
             {
                 button.Text = board.TabCell[index_x, index_y].BombAround.ToString();
             }
-
-                
         }
 
         
@@ -78,13 +79,16 @@ namespace Demineur
                 {
                     try
                     {
-
-                        this.board.DiscoverCell(i, j);
-                        this.buttons[i,j].Enabled = false;
-                        this.board.TabCell[i, j].BombAround.ToString();
+                        if (!HadBomb(i,j))
+                        {
+                            this.board.DiscoverCell(i, j);
+                            this.buttons[i, j].Text = this.board.TabCell[i, j].BombAround.ToString();
+                            this.buttons[i, j].Enabled = false;
+                        }
                     }
-                    catch (IndexOutOfRangeException)
+                    catch (IndexOutOfRangeException e)
                     {
+                        Debug.Print(e.Message+" VIEW " + i + j);
                         new IndexOutOfRangeException();
                     }
                 }

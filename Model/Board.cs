@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,9 +74,11 @@ namespace Demineur.Model
                             BombAround++;
                         }
                     }
-                    catch (IndexOutOfRangeException)
+                    catch (IndexOutOfRangeException e)
                     {
+                        Debug.Print(e.Message + " MODEL " + i + j);
                         new IndexOutOfRangeException();
+                        
                     }
 
                 }
