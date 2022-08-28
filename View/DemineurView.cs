@@ -50,12 +50,12 @@ namespace Demineur
             if (HadBomb(index_x, index_y))
             {
                 button.Text = "X";
-                //MessageBox.Show("U Lose noob");
+                MessageBox.Show("U Lose noob");
             }
             
             else if (board.Had0BombAround(index_x, index_y))
             {
-                DiscoverEmptyCellAround(index_x, index_y);
+                DiscoverCellAround(index_x, index_y);
             }
             
             else
@@ -71,27 +71,43 @@ namespace Demineur
             return board.TabCell[index_x, index_y].HasBomb == true;
         }
 
-        private void DiscoverEmptyCellAround(int index_x, int index_y)
+        private void DiscoverCellAround(int index_x, int index_y)
         {
             for (int i = index_x - 1; i < index_x - 1 + Board.LINE_ANALYSYS; i++)
             {
                 for (int j = index_y - 1; j < index_y - 1 + Board.COLUMN_ANALYSYS; j++)
                 {
-                    try
-                    {
-                        if (!HadBomb(i,j))
-                        {
-                            this.board.DiscoverCell(i, j);
-                            this.buttons[i, j].Text = this.board.TabCell[i, j].BombAround.ToString();
-                            this.buttons[i, j].Enabled = false;
-                        }
-                    }
-                    catch (IndexOutOfRangeException e)
-                    {
-                        Debug.Print(e.Message+" VIEW " + i + j);
-                        new IndexOutOfRangeException();
-                    }
+                    DiscoverCellAt(i, j);
                 }
+            }
+        }
+
+        private void DiscoverCellAt(int i, int j)
+        {
+            try
+            {
+                if (!HadBomb(i, j))
+                {
+                    this.board.DiscoverCell(i, j);
+                    if (this.board.Had0BombAround(i, j) && this.buttons[i, j].Enabled == true)
+                    {
+                        this.buttons[i, j].Enabled = false;
+                        DiscoverCellAround(i, j);
+                    }
+                    this.buttons[i, j].Enabled = false;
+
+                    if (this.board.Had0BombAround(i, j))
+                    {
+                        this.buttons[i, j].Text = "";
+                    }
+                    else
+                        this.buttons[i, j].Text = this.board.TabCell[i, j].BombAround.ToString();
+                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                //Debug.Print(e.Message+" VIEW " + i + j);
+                new IndexOutOfRangeException();
             }
         }
     }

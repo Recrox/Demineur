@@ -11,10 +11,12 @@ namespace Demineur.Model
     {
         private static int line_ANALYSYS = 3;
         private static int column_ANALYSYS = 3;
-        private const int LuckToFindBomb = 8;
-        private static int x_SIZE = 10;
-        private static int y_SIZE = 10;
+        private const int LuckToFindBomb = 10;
+        private static int x_SIZE = 20;
+        private static int y_SIZE = 20;
         private Cell[,] tabCell = new Cell[X_SIZE, Y_SIZE];
+        private int bombRemaining;
+
         public Cell[,] TabCell { get => tabCell; set => tabCell = value; }
         public static int X_SIZE { get => x_SIZE; set => x_SIZE = value; }
         public static int Y_SIZE { get => y_SIZE; set => y_SIZE = value; }
@@ -46,6 +48,7 @@ namespace Demineur.Model
             if (rand.Next(1, LuckToFindBomb) == 1)
             {
                 hasBomb = true;
+                bombRemaining++;
             }
             else hasBomb = false;
             return hasBomb;
@@ -76,7 +79,7 @@ namespace Demineur.Model
                     }
                     catch (IndexOutOfRangeException e)
                     {
-                        Debug.Print(e.Message + " MODEL " + i + j);
+                        //Debug.Print(e.Message + " MODEL " + i + j);
                         new IndexOutOfRangeException();
                         
                     }
@@ -89,6 +92,11 @@ namespace Demineur.Model
         public bool Had0BombAround(int index_x, int index_y)
         {
             return TabCell[index_x, index_y].BombAround == 0;
+        }
+
+        public bool IsDiscover(int index_x, int index_y)
+        {
+            return TabCell[index_x, index_y].IsDiscover == true;
         }
     }
 }
